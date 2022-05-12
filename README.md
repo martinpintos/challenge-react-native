@@ -35,3 +35,5 @@ expo start
 - Latest address transactions
 - Button to copy address
 - ETH Balance
+
+The ethers.js library was used instead of web3.js as there is a compatibility issue between it and React Native. Web3.js has some dependencies that are browser modules in its core and that's why it throws all kinds of errors.

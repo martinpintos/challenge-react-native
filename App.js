@@ -5,33 +5,33 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./src/screens/HomeScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import WalletConnectProvider from "react-native-walletconnect";
-import { RootSiblingParent } from "react-native-root-siblings";
-import { LogBox } from "react-native";
 import { StatusBar } from "react-native";
+import { LogBox } from "react-native";
 
-LogBox.ignoreLogs(["Warning: ..."]);
-LogBox.ignoreAllLogs();
+LogBox.ignoreLogs(["exported from 'deprecated-react-native-prop-types'."]);
+LogBox.ignoreLogs([
+  "ViewPropTypes will be removed",
+  "ColorPropType will be removed",
+]);
 
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
-    <RootSiblingParent>
+    <WalletConnectProvider>
       <StatusBar barStyle="light-content" />
-      <WalletConnectProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Login"
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Home" component={HomeScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </WalletConnectProvider>
-    </RootSiblingParent>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Login"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </WalletConnectProvider>
   );
 }
 

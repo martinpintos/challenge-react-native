@@ -15,7 +15,7 @@ import { useEffect } from "react";
 import tw from "tailwind-rn";
 import Icon from "react-native-vector-icons/AntDesign";
 import * as Clipboard from "expo-clipboard";
-import Toast from "react-native-root-toast";
+// import Toast from "react-native-root-toast";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -105,16 +105,16 @@ const HomeScreen = ({ navigation }) => {
   const { killSession, session } = useWalletConnect();
   const hasWallet = !!session.length;
 
-  const showToast = () => {
-    Toast.show("Address copied to clipboard", {
-      duration: Toast.durations.LONG,
-      position: Toast.positions.BOTTOM,
-      shadow: true,
-      animation: true,
-      hideOnPress: true,
-      delay: 0,
-    });
-  };
+  // const showToast = () => {
+  //   Toast.show("Address copied to clipboard", {
+  //     duration: Toast.durations.LONG,
+  //     position: Toast.positions.BOTTOM,
+  //     shadow: true,
+  //     animation: true,
+  //     hideOnPress: true,
+  //     delay: 0,
+  //   });
+  // };
 
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(address?.toString());
@@ -122,7 +122,7 @@ const HomeScreen = ({ navigation }) => {
 
   const handlePress = () => {
     copyToClipboard();
-    showToast();
+    // showToast();
   };
 
   const onRefresh = React.useCallback(() => {
@@ -179,7 +179,7 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     if (!!address) {
       fetch(
-        `https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken`,
+        `https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=MM4U44IJTCU15Y391HXBGNX7DMEH9R1696`,
         {
           method: "GET",
         }
@@ -217,7 +217,7 @@ const HomeScreen = ({ navigation }) => {
           setTransactions(orderedTransactions);
         });
     }
-  }, [address, refreshing, hasWallet, ethBalance]);
+  }, [address, refreshing, hasWallet, ethBalance, fiatBalance]);
 
   const renderItem = ({ item }) => (
     <Item
@@ -240,11 +240,11 @@ const HomeScreen = ({ navigation }) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View style={tw("my-3 flex-row  items-center justify-between px-5")}>
+        <View style={tw("my-3 flex-row items-center justify-between px-5")}>
           <TouchableOpacity onPress={handlePress}>
             <Text style={tw("text-lg font-bold text-white")}>
               Wallet 1{" "}
-              <Text style={[tw(" font-normal"), { color: "#71717a" }]}>
+              <Text style={[tw("font-normal"), { color: "#71717a" }]}>
                 ({address.slice(0, 6)}...{address.slice(-4)})
               </Text>
             </Text>
@@ -258,7 +258,7 @@ const HomeScreen = ({ navigation }) => {
             Total balance
           </Text>
 
-          <Text style={[tw("text-white font-light"), { fontSize: "68px" }]}>
+          <Text style={[tw("text-white font-light"), { fontSize: 68 }]}>
             ${Math.trunc(fiatBalance)}
             <Text style={{ color: "#3f3f46" }}>
               ,{fiatBalance.toString().split(".")[1]}
@@ -309,9 +309,9 @@ const HomeScreen = ({ navigation }) => {
           ))}
         </View>
         <FlatList
+          scrollEnabled={false}
           data={transactions}
           renderItem={renderItem}
-          keyExtractor={(item) => item.date.toString()}
           style={tw("flex-1 mt-3")}
           ListHeaderComponent={
             <View style={tw("flex-row items-center justify-between mb-2 px-5")}>

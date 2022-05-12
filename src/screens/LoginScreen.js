@@ -9,6 +9,13 @@ import {
 import React, { useEffect } from "react";
 import { useWalletConnect } from "react-native-walletconnect";
 import tw from "tailwind-rn";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["exported from 'deprecated-react-native-prop-types'."]);
+LogBox.ignoreLogs([
+  "ViewPropTypes will be removed",
+  "ColorPropType will be removed",
+]);
 
 const LoginScreen = ({ navigation }) => {
   const { createSession, session } = useWalletConnect();
@@ -38,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
         <Text
           style={[
             tw("font-bold text-white text-center w-full"),
-            { fontSize: "40px" },
+            { fontSize: 40 },
           ]}
         >
           Track your crypto assets easily
